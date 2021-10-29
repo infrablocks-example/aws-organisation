@@ -1,0 +1,17 @@
+---
+# General
+region: "eu-west-2"
+
+development_group: "ibe"
+
+component: "aws-global"
+deployment_identifier: "%{deployment_group}-%{deployment_type}-%{deployment_label}"
+
+source_repository_url: "git@github.com:atomic-innovation/aws-global.git"
+source_repository_branch: "main"
+
+storage_bucket_name: "%{hiera('development_group')}-%{hiera('component')}-%{hiera('deployment_identifier')}"
+storage_bucket_encryption: "AES256"
+
+ibe_root_account_id: "176145454894"
+ibe_management_account_id: "659577903312"
