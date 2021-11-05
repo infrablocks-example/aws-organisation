@@ -62,7 +62,6 @@ As a general rule, the root account should never be used except in emergencies
 so lock the credentials away somewhere very safe and use the admin user for
 anything requiring admin access.
 
-
 Technologies Used
 -----------------
 
