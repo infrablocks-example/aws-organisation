@@ -22,4 +22,4 @@ workflows:
       - provision:
           filters:
             branches:
-              only: main
+              only: master
