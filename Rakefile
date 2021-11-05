@@ -3,8 +3,10 @@ require "yaml"
 require 'securerandom'
 require 'rake_circle_ci'
 require 'rake_gpg'
+require 'rake_ssh'
 require 'confidante'
 require 'rake_terraform'
+require 'rake_github'
 require 'paint'
 
 configuration = Confidante.configuration
@@ -15,14 +17,64 @@ RakeTerraform.define_installation_tasks(
 )
 
 namespace :encryption do
+  namespace :directory do
+    desc 'Ensure CI secrets directory exists'
+    task :ensure do
+      FileUtils.mkdir_p('config/secrets/ci')
+    end
+  end
+
   namespace :passphrase do
     desc 'Generate encryption passphrase for CI GPG key'
-    task :generate do
+    task generate: ['directory:ensure'] do
       File.open('config/secrets/ci/encryption.passphrase', 'w') do |f|
         f.write(SecureRandom.base64(36))
       end
     end
   end
+end
+
+namespace :keys do
+  namespace :deploy do
+    RakeSSH.define_key_tasks(
+      path: 'config/secrets/ci/',
+      comment: 'maintainers@logicblocks.io'
+    )
+  end
+
+  namespace :secrets do
+    namespace :gpg do
+      RakeGPG.define_generate_key_task(
+        output_directory: 'config/secrets/ci',
+        name_prefix: 'gpg',
+        owner_name: 'LogicBlocks Maintainers',
+        owner_email: 'maintainers@logicblocks.io',
+        owner_comment: 'InfraBlocks Example CI Key'
+      )
+    end
+
+    task generate: ['gpg:generate']
+  end
+end
+
+namespace :secrets do
+  desc 'Regenerate all secrets'
+  task regenerate: %w[
+    encryption:passphrase:generate
+    keys:deploy:generate
+    keys:secrets:generate
+  ]
+end
+
+namespace :pipeline do
+  desc 'Prepare CircleCI Pipeline'
+  task prepare: %i[
+    circle_ci:project:follow
+    circle_ci:env_vars:ensure
+    circle_ci:checkout_keys:ensure
+    circle_ci:ssh_keys:ensure
+    github:deploy_keys:ensure
+  ]
 end
 
 namespace :secrets do
@@ -95,7 +147,7 @@ end
 
 RakeCircleCI.define_project_tasks(
   namespace: :circle_ci,
-  project_slug: 'github/infrablocks-examples/aws-organisation'
+  project_slug: 'github/infrablocks-example/aws-organisation'
 ) do |t|
   circle_ci_config =
     YAML.load_file('config/secrets/circle_ci/config.yaml')
@@ -108,3 +160,20 @@ RakeCircleCI.define_project_tasks(
   }
   t.checkout_keys = []
 end
+
+RakeGithub.define_repository_tasks(
+  namespace: :github,
+  repository: 'infrablocks-example/aws-organisation',
+  ) do |t|
+  github_config =
+    YAML.load_file('config/secrets/github/config.yaml')
+
+  t.access_token = github_config['github_personal_access_token']
+  t.deploy_keys = [
+    {
+      title: 'CircleCI',
+      public_key: File.read('config/secrets/ci/ssh.public')
+    }
+  ]
+end
+

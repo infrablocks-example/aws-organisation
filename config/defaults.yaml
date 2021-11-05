@@ -7,9 +7,6 @@ development_group: "ibe"
 component: "aws-global"
 deployment_identifier: "%{deployment_group}-%{deployment_type}-%{deployment_label}"
 
-source_repository_url: "git@github.com:aws-organisation/aws-organisation.git"
-source_repository_branch: "main"
-
 storage_bucket_name: "%{hiera('development_group')}-%{hiera('component')}-%{hiera('deployment_identifier')}"
 storage_bucket_encryption: "AES256"
 
