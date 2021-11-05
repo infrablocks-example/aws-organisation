@@ -81,33 +81,18 @@ namespace :organization do
   end
 end
 
-namespace :ci do
-  RakeFly.define_project_tasks(
-    pipeline: 'aws-organisation',
-    argument_names: %i[
-      ci_deployment_group
-      ci_deployment_type
-      ci_deployment_label
-    ]
-  ) do |t, args|
-    configuration = configuration
-                    .for_scope(args.to_h.merge(role: 'pipeline'))
-    ci_deployment_identifier = configuration.ci_deployment_identifier
+RakeCircleCI.define_project_tasks(
+  namespace: :circle_ci,
+  project_slug: 'github/infrablocks-examples/aws-organisation'
+) do |t|
+  circle_ci_config =
+    YAML.load_file('config/secrets/circle_ci/config.yaml')
 
-    t.concourse_url = configuration.concourse_url
-    t.team = configuration.concourse_team
-    t.username = configuration.concourse_username
-    t.password = configuration.concourse_password
-
-    t.config = 'pipelines/pipeline.yaml'
-
-    t.vars = configuration.vars
-    t.var_files = [
-      'config/secrets/pipeline/constants.yaml',
-      "config/secrets/pipeline/#{ci_deployment_identifier}.yaml"
-    ]
-
-    t.non_interactive = true
-    t.home_directory = 'build/fly'
-  end
+  t.api_token = circle_ci_config['circle_ci_api_token']
+  t.environment_variables = {
+    ENCRYPTION_PASSPHRASE:
+      File.read('config/secrets/ci/encryption.passphrase')
+          .chomp
+  }
+  t.checkout_keys = []
 end

@@ -1,0 +1,25 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2
+
+jobs:
+  provision:
+    docker:
+      - image: circleci/ruby:2.7.2-node
+    executor: ruby/default
+    steps:
+      - checkout
+      - run: ./scripts/ci/common/install-git-crypt.sh
+      - run: ./scripts/ci/common/install-gpg-key.sh
+      - run: ./scripts/ci/common/install-aws-cli.sh
+      - run: ./scripts/ci/common/configure-git.sh
+      - run: ./scripts/ci/steps/provision-organisation.sh
+
+workflows:
+  version: 2
+  pipeline:
+    jobs:
+      - provision:
+          filters:
+            branches:
+              only: main
