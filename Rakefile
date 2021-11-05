@@ -14,6 +14,17 @@ RakeTerraform.define_installation_tasks(
   version: '1.0.10'
 )
 
+namespace :encryption do
+  namespace :passphrase do
+    desc 'Generate encryption passphrase for CI GPG key'
+    task :generate do
+      File.open('config/secrets/ci/encryption.passphrase', 'w') do |f|
+        f.write(SecureRandom.base64(36))
+      end
+    end
+  end
+end
+
 namespace :secrets do
   desc 'Check if secrets are readable'
   task :check do
