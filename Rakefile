@@ -1,13 +1,14 @@
 # frozen_string_literal: true
-
+require "yaml"
+require 'securerandom'
+require 'rake_circle_ci'
+require 'rake_gpg'
 require 'confidante'
 require 'rake_terraform'
-require 'rake_fly'
 require 'paint'
 
 configuration = Confidante.configuration
 
-RakeFly.define_installation_tasks(version: '6.7.2')
 RakeTerraform.define_installation_tasks(
   path: File.join(Dir.pwd, 'vendor', 'terraform'),
   version: '1.0.10'
