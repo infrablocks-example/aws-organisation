@@ -159,12 +159,7 @@ RakeCircleCI.define_project_tasks(
           .chomp
   }
   t.checkout_keys = []
-  t.ssh_keys = [
-    {
-      hostname: 'github.com',
-      private_key: File.read('config/secrets/ci/ssh.private')
-    }
-  ]
+  t.ssh_keys = []
 end
 
 
@@ -176,11 +171,6 @@ RakeGithub.define_repository_tasks(
     YAML.load_file('config/secrets/github/config.yaml')
 
   t.access_token = github_config['github_personal_access_token']
-  t.deploy_keys = [
-    {
-      title: 'CircleCI',
-      public_key: File.read('config/secrets/ci/ssh.public')
-    }
-  ]
+  t.deploy_keys = []
 end
 
