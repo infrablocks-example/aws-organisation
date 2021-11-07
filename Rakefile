@@ -3,7 +3,6 @@ require "yaml"
 require 'securerandom'
 require 'rake_circle_ci'
 require 'rake_gpg'
-require 'rake_ssh'
 require 'confidante'
 require 'rake_terraform'
 require 'rake_github'
@@ -35,13 +34,6 @@ namespace :encryption do
 end
 
 namespace :keys do
-  namespace :deploy do
-    RakeSSH.define_key_tasks(
-      path: 'config/secrets/ci/',
-      comment: 'maintainers@logicblocks.io'
-    )
-  end
-
   namespace :secrets do
     namespace :gpg do
       RakeGPG.define_generate_key_task(
@@ -72,7 +64,6 @@ namespace :pipeline do
     circle_ci:project:follow
     circle_ci:env_vars:ensure
     circle_ci:checkout_keys:ensure
-    circle_ci:ssh_keys:ensure
     github:deploy_keys:ensure
   ]
 end
