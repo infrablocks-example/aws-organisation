@@ -7,7 +7,6 @@ This repository sets up:
 Usage
 -----
 
-
 The configurations in this repository should be executed against an empty
 account as the root user. As such a root user access key is required which
 should be deleted once all configurations have been successfully applied.
