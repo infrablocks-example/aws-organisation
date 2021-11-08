@@ -9,6 +9,8 @@ PROJECT_DIR="$( cd "$SCRIPT_DIR/../../.." && pwd )"
 
 cd "$PROJECT_DIR"
 
+gpg --version
+
 set +e
 openssl version
 openssl aes-256-cbc \
