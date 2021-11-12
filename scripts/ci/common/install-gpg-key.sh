@@ -17,5 +17,5 @@ openssl aes-256-cbc \
     -d \
     -md sha1 \
     -in ./.circleci/gpg.private.enc \
-    -k "${ENCRYPTION_PASSPHRASE}" | gpg --import --batch -
+    -k "${ENCRYPTION_PASSPHRASE}" | gpg --import -
 set -e
