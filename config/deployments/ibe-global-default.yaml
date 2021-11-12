@@ -1,6 +1,7 @@
 ---
 # General
 ibe_parent_account_email: "admin.aws+ibe.parent@go-atomic.io"
+ibe_example_product_account_email: "admin.aws+ibe.example-product@go-atomic.io"
 ibe_management_account_email: "admin.aws+ibe.management@go-atomic.io"
 ibe_development_molybdenum_account_email: "admin.aws+ibe.development.molybdenum@go-atomic.io"
 ibe_production_holmium_account_email: "admin.aws+ibe.production.holmium@go-atomic.io"

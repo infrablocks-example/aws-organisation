@@ -4,6 +4,7 @@ vars:
 
   ibe_management_account_email: "%{hiera('ibe_management_account_email')}"
   ibe_parent_account_email: "%{hiera('ibe_parent_account_email')}"
+  ibe_example_product_account_email: "%{hiera('ibe_example_product_account_email')}"
   ibe_development_molybdenum_account_email: "%{hiera('ibe_development_molybdenum_account_email')}"
   ibe_production_holmium_account_email: "%{hiera('ibe_production_holmium_account_email')}"
 

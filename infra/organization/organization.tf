@@ -33,7 +33,7 @@ module "organization" {
     },
     {
       name = "Example Product Default"
-      email = var.ibe_parent_account_email
+      email = var.ibe_example_product_account_email
       organizational_unit = "Example Product"
       allow_iam_users_access_to_billing = true
     },
