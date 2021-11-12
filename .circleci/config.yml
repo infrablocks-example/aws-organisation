@@ -10,7 +10,7 @@ jobs:
       - run: ./scripts/ci/common/install-gpg-key.sh
       - run: ./scripts/ci/common/install-aws-cli.sh
       - run: ./scripts/ci/common/configure-git.sh
-      - run: ./scripts/ci/steps/provision-organisation.sh
+      - run: ./scripts/ci/steps/provision-organization.sh
 
 workflows:
   version: 2
