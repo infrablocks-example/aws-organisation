@@ -1,0 +1,6 @@
+---
+vars:
+  organization_provisioning_role_arn: "%{hiera('organization_provisioning_role_arn')}"
+  organization_deployment_group: "%{hiera('organization_deployment_group')}"
+  organization_deployment_type: "%{hiera('organization_deployment_type')}"
+  organization_deployment_label: "%{hiera('organization_deployment_label')}"

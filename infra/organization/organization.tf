@@ -4,33 +4,25 @@ module "organization" {
 
   organizational_units = [
     {
-      name = "InfraBlocks",
+      name = "Example Product",
       children = [
         {
-          name = "Example Product"
-          children = [
-            {
-              name = "Management"
-            },
-            {
-              name = "Development"
-            },
-            {
-              name = "Production"
-            }
-          ]
+          name = "Management",
+          children = []
+        },
+        {
+          name = "Development",
+          children = []
+        },
+        {
+          name = "Production",
+          children = []
         }
       ]
     }
   ]
 
   accounts = [
-    {
-      name = "InfraBlocks Default"
-      email = var.ibe_parent_account_email
-      organizational_unit = "InfraBlocks"
-      allow_iam_users_access_to_billing = true
-    },
     {
       name = "Example Product Default"
       email = var.ibe_example_product_account_email
