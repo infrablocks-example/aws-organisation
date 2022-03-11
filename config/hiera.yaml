@@ -9,5 +9,4 @@
 :hierarchy:
   - "roles/%{role}"
   - "deployments/%{deployment_group}-%{deployment_type}-%{deployment_label}"
-  - "pipelines/defaults"
   - "defaults"

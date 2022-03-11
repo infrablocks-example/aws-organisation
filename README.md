@@ -6,26 +6,9 @@ This repository sets up:
 
 Usage
 -----
-
-
 The configurations in this repository should be executed against an empty
 account as the root user. As such a root user access key is required which
 should be deleted once all configurations have been successfully applied.
-
-### Unlocking secrets
-
-Most tasks require access to secrets stored within the repository. To unlock
-the secrets, make sure your GPG key has been given access and execute:
-
-```shell script
-go secrets:unlock
-```
-
-To check if secrets are successfully unlocked, execute:
-
-```shell script
-go secrets:check
-```
 
 ### Provisioning the state storage bucket
 

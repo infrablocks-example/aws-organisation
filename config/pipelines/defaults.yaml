@@ -1,5 +1,0 @@
----
-organization_provisioning_role_arn: "arn:aws:iam::%{hiera('ibe_root_account_id')}:role/cross-account-admin-role"
-organization_deployment_group: "ibe"
-organization_deployment_type: "organisation"
-organization_deployment_label: "default"
