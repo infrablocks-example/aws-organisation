@@ -11,4 +11,3 @@ storage_bucket_name: "%{hiera('development_group')}-%{hiera('component')}-%{hier
 storage_bucket_encryption: "AES256"
 
 ibe_root_account_id: "111005169881"
-ibe_management_account_id: ""
